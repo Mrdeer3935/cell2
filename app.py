@@ -3,7 +3,7 @@ import hydralit_components as hc
 from hydralit import HydraApp
 from Browse import BrowseAPP
 from Home import HomeAPP
-from View import ViewAPP
+#from View import ViewAPP
 from Help import HelpAPP
 
 #make it look nice from the start
