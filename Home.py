@@ -2,6 +2,7 @@ import streamlit as st
 from hydralit import HydraHeadApp
 import pandas as pd
 import plotly.io as pio
+import streamlit.components.v1 as components
 pio.renderers.default = 'browser'
 
 class HomeAPP(HydraHeadApp):
@@ -25,7 +26,7 @@ class HomeAPP(HydraHeadApp):
         col4,col5,col6,col7,col8 =st.columns((1,3,1,3,1))
 
         with col5:
-            st.image("compenent0.png")
+            st.image("F0.png")
 
         with col7:
             st.markdown(
@@ -33,7 +34,7 @@ class HomeAPP(HydraHeadApp):
                 <div class="my-link">
                   <a href="Nasal_Cavity_Dataset">
                     <div class="my-container">
-                      <img src="https://i.postimg.cc/Y2y95DNm/compenent2.png" alt="Image">
+                      <img src="https://i.postimg.cc/pTFGGpF2/f2.png" alt="Image">
                       <div class="my-text">
                         <h3>Nasal Cavity&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</h3>
                         <p>EGA(3)&nbsp&nbsp&nbsp&nbspGEO(10)</p>
@@ -65,6 +66,7 @@ class HomeAPP(HydraHeadApp):
                     flex-direction: column;
                   }
                   .my-text h3 {
+                  color :black;
                     margin: 0;
                     align-items: center;
                   }
@@ -72,6 +74,7 @@ class HomeAPP(HydraHeadApp):
                     color :black;
                     margin: 0;
                     align-items: center;
+                    font-weight:bold;
                   }
                   .my-caption {
                     position: absolute;
@@ -102,9 +105,9 @@ class HomeAPP(HydraHeadApp):
             st.markdown(
                 """
                 <div class="my-link">
-                  <a href="#1">
+                  <a href="Nasopharynx_Dataset">
                     <div class="my-container">
-                      <img src="https://i.postimg.cc/5twQ159W/compenent3.png" alt="Image">
+                      <img src="https://i.postimg.cc/pVQkmNQ1/f3.png" alt="Image">
                       <div class="my-text">
                         <h3>Nasopharynx&nbsp&nbsp&nbsp&nbsp&nbsp</h3>
                         <p>Single Cell Portal(1)<br>GEO(1)&nbsp&nbsp&nbspCNCB(1)</p>
@@ -136,11 +139,13 @@ class HomeAPP(HydraHeadApp):
                     flex-direction: column;
                   }
                   .my-text h3 {
+                  color :black;
                     margin: 0;
                   }
                   .my-text p {
                     color :black;
                     margin: 0;
+                    font-weight:bold;
                   }
                   .my-caption {
                     position: absolute;
@@ -171,9 +176,9 @@ class HomeAPP(HydraHeadApp):
             st.markdown(
                 """
                 <div class="my-link">
-                  <a href="#1">
+                  <a href="Paranasal_Sinus_Dataset">
                     <div class="my-container">
-                      <img src="https://i.postimg.cc/3NvVbyFF/component1.png" alt="Image" width=300>
+                      <img src="https://i.postimg.cc/Gh7FDb4z/f1.png" alt="Image" width=300>
                       <div class="my-text">
                         <h3>Paranasal Sinus</h3>
                         <p>GEO(3)&nbsp&nbsp&nbspdbGaP(1)&nbsp&nbsp&nbspCNCB(1)&nbsp</p>
@@ -205,11 +210,13 @@ class HomeAPP(HydraHeadApp):
                     flex-direction: column;
                   }
                   .my-text h3 {
+                  color :black;
                     margin: 0;
                   }
                   .my-text p {
                     color :black;
                     margin: 0;
+                    font-weight:bold;
                   }
                   .my-caption {
                     position: absolute;
@@ -236,4 +243,9 @@ class HomeAPP(HydraHeadApp):
                 """,
                 unsafe_allow_html=True
             )
+
+        with open('visitors.html', "r", encoding='utf-8') as f:
+            data = f.read()
+        #components.html("", height=50)
+        components.html(data, height=500, scrolling=False)
 
