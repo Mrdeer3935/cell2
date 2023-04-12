@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode, DataReturnMode, JsCode
 import plotly.graph_objects as go
+import streamlit.components.v1 as components
 class BrowseAPP(HydraHeadApp):
 
 #wrap all your code in this method and you should be done
@@ -12,7 +13,7 @@ class BrowseAPP(HydraHeadApp):
         # 导入数据###
         @st.cache()
         def fetch_data():
-            table = pd.read_csv("dataset.csv")
+            table = pd.read_csv("data.csv")
             return table
 
         @st.cache  # 添加缓存装饰
@@ -28,20 +29,23 @@ class BrowseAPP(HydraHeadApp):
 
         # customize gridOptions
         gb.configure_default_column(groupable=True, value=True, enableRowGroup=False, flex=1,
-                                    floatingFilter=True, )  # , editable=True,esizable: true,minWidth: 200,
+                                    floatingFilter=True,header_style={'fontWeight': 'bold', 'fontSize': '30px', 'textAlign': 'center'} )  # , editable=True,esizable: true,minWidth: 200,
         gb.configure_column("Id", type=[
-            "setColumnFilter"])
+            "setColumnFilter","setQuickFilter"])
         gb.configure_column("Year", type=[
             "setColumnFilter"])
-        gb.configure_column("Title", )
-        gb.configure_column("Journal", )
+        gb.configure_column("Title", type=[
+            "setColumnFilter"])
+        # gb.configure_column("Journal", type=[
+        #     "setColumnFilter"])
         gb.configure_column("Platfrom", type=[
             "setColumnFilter"])
         gb.configure_column("Tissue", type=[
             "setColumnFilter"])
         gb.configure_column("Method", type=[
             "setColumnFilter"])
-        gb.configure_column("Sample Message", )
+        # gb.configure_column("Sample Message",type=[
+        #     "setColumnFilter"] )
         gb.configure_column("Enrichment Cell Types", type=[
             "setColumnFilter"])  # type=["dateColumnFilter","customDateTimeFormat"],custom_format_string='yyyy', pivot=True
         gb.configure_column("Cell Amount", type=["numericColumn", "numberColumnFilter", "customNumericFormat"],
@@ -68,10 +72,9 @@ class BrowseAPP(HydraHeadApp):
 
 
         gb.configure_selection('single', use_checkbox=True, )
-
         ###
-        gb.configure_grid_options(domLayout='normal')  # 'autoHeight''print''normal' 整体表格的高度
-        # gb.configure_pagination(paginationAutoPageSize=True)
+        #gb.configure_grid_options(domLayout='normal',)  # 'autoHeight''print''' 整体表格的高度
+        # gb.configure_pagination() #paginationAutoPageSize=True
         gridOptions = gb.build()
 
         # Display the grid
@@ -84,12 +87,13 @@ class BrowseAPP(HydraHeadApp):
                 gridOptions=gridOptions,
                 height=500,
                 width='100%',
-                fit_columns_on_grid_load=True,
+                fit_columns_on_grid_load=False,
                 allow_unsafe_jscode=True,  # Set it to True to allow jsfunction to be injected
                 theme="alpine",  # material  alpine
                 key='table1',
                 data_return_mode="filtered_and_sorted",
-                columns_auto_size_mode='ColumnsAutoSizeMode.FIT_CONTENTS'
+                columns_auto_size_mode='ColumnsAutoSizeMode.FIT_CONTENTS',
+                quick_filter=True,
             )
             # st.markdown(grid_response.selected_rows)
             if not grid_response.selected_rows :
@@ -104,11 +108,15 @@ class BrowseAPP(HydraHeadApp):
 
         with col6:
             st.subheader(f"Dataset ID: {show_id}")
-            plot, violin = st.tabs(['UMAP PLOT', 'GENE(X) EXPRESSION'])
+            plot, plot2, table, violin = st.tabs(['UMAP PLOT', 'CELLCHAT PLOT','DIFFERENTIAL GENE EXPRESSION','GENE(X) EXPRESSION'])
 
             with plot:
 
                 st.image("UMAP.png")
+
+            with plot2:
+
+                st.image("COM.png")
 
             with violin:
                 gene_data = load_data()
@@ -149,5 +157,6 @@ class BrowseAPP(HydraHeadApp):
                     )
 
                 st.plotly_chart(fig1)
+
 
 
